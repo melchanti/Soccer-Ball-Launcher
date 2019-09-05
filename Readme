@@ -14,3 +14,5 @@ After that, with the inputted data and location data the application calculated 
 Lastly, the application sent the requirement to an Arduino set which in turn controlled the DC motors and the step motors of the machine
 
 NOTE: Testing is the full Android APP for this project.
+
+NOTE: To use this app, you'll need to enter a new google PAI key at Soccer-Ball-Launcher/Testing/app/src/debug/res/values/
