@@ -15,4 +15,4 @@ Lastly, the application sent the requirement to an Arduino set which in turn con
 
 NOTE: Testing is the full Android APP for this project.
 
-NOTE: To use this app, you'll need to enter a new google PAI key at Soccer-Ball-Launcher/Testing/app/src/debug/res/values/
+NOTE: To use this app, you'll need to enter a new google PAI key at Soccer-Ball-Launcher/Testing/app/src/debug/res/values/google_maps_api.xml
