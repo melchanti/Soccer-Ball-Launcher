@@ -1,0 +1,14 @@
+In the case of soccer, practicing ball reception and attacking skills are vital for all 11 players on the field. 
+Ball reception includes first touch control, which is the foundation for setting up for attacking skills that include; headers, volleys, first-time passes, etc. Growing up and even today, there were not always other people to practice with which led to frustration with trying to practice alone. 
+With this in mind, it was desired to create a robot that would eliminate the need of having other people to practice effectively.
+
+The robot was to have 4 axis, two axis used two servo motors for rotation. 
+One axis used two DC motors to control the speed and rotation of the ball and the last axis used an actuator to reload the robot with balls as neccessary.
+
+As a team of 6 individiuals, we split the group into three smaller teams. 
+The first team was assigned to design and analyse the machine usign finite element analysis, the second team was responsible to manufacture the machine and the third team was responsibe to perform the software and electerical requirements of the machine.
+
+A team member and I were the Software team. We created an Android application which asked the user for various inputs. 
+The application then registered the location of the machine and the user from the phone's built-in GPS system. 
+After that, with the inputted data and location data the application calculated the neccessary speed of the motors and the orientation of the machine using a fluid dynamics model that I built. 
+Lastly, the application sent the requirement to an Arduino set which in turn controlled the DC motors and the step motors of the machine
