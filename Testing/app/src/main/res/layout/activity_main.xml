@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.testing.MainActivity">
+
+    <TextView
+        android:id="@+id/Maininstruction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:background="#FDFEFE"
+        android:text="WELCOME TO AUTOSHOT SOLUTIONS" />
+
+    <Space
+        android:id="@+id/MainSpace"
+        android:layout_width="1dp"
+        android:layout_height="30dp"
+        android:layout_below="@id/Maininstruction"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Set Launcher Position"
+        android:onClick="LauncherPosition"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/MainSpace"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="20dp"
+        android:id="@+id/Launcher" />
+
+    <Space
+        android:id="@+id/MainSpace1"
+        android:layout_width="1dp"
+        android:layout_below="@id/Launcher"
+        android:layout_height="30dp"/>
+
+    <Button
+        android:id="@+id/Player"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/MainSpace1"
+        android:layout_marginLeft="20dp"
+        android:text="Set Your Position"
+        android:onClick="PlayerPosition"/>
+
+    <Space
+        android:id="@+id/MainSpace2"
+        android:layout_width="1dp"
+        android:layout_below="@id/Player"
+        android:layout_height="30dp"/>
+
+    <Button
+        android:id="@+id/Reset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/MainSpace2"
+        android:layout_marginLeft="20dp"
+        android:text="Reset Launcher Position"
+        android:onClick="ResetPosition"/>
+
+
+</RelativeLayout>

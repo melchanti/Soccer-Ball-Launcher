@@ -1,0 +1,182 @@
+
+#include <Servo.h>
+String data= "";
+char hint = 0;            //Variable for storing received data
+String vAngle1= "null";
+String hAngle1= "null";
+String speed1 = "";
+int vAngle=0;
+int hAngle=0;
+int speed=0;
+int dataR=0;
+double currentVAngle=0;
+double currentHAngle=90;
+
+#define directionV 2
+#define stepV 3
+#define directionH 4
+#define stepH 5
+
+
+int act1Pin = 7;
+int act2Pin = 6;
+
+int dc1Pin= 8;
+int dc2Pin=9;
+int enablePinDC= 10;
+
+Servo servo;
+
+void setup()
+{
+    Serial.begin(9600);   //Sets the baud for serial data transmission                               
+    pinMode(13, OUTPUT);  //Sets digital pin 13 as output pin
+    pinMode(directionH, OUTPUT);  //Sets digital pin 13 as output pin
+    pinMode(stepH,OUTPUT);
+    pinMode(directionV, OUTPUT);  //Sets digital pin 13 as output pin
+    pinMode(stepV,OUTPUT);
+    pinMode(act1Pin, OUTPUT);  //Sets digital pin 13 as output pin
+    pinMode(act2Pin,OUTPUT);
+    pinMode(dc1Pin, OUTPUT);
+    pinMode(dc2Pin, OUTPUT);
+    pinMode(enablePinDC, OUTPUT);
+    data="";
+}
+void loop()
+{
+   if(Serial.available() > 0)      // Send data only when you receive data:
+   {
+      hint = Serial.read();        //Read the incoming data & store into data
+      Serial.print(hint);          //Print Value inside data in Serial monitor
+      Serial.println("");
+      data+=hint;
+      dataR=1;
+      delayMicroseconds(1050);
+   }
+
+  else {
+    if (dataR==1){
+    for (int Run=0; Run<1; Run++){
+      int startHAngle=data.indexOf('*');
+      if (startHAngle == -1)
+        break;
+      int endHAngle= data.indexOf('#');
+      int endVAngle= data.indexOf('$');
+      int endSpeed= data.indexOf('@');
+      hAngle1= data.substring(startHAngle+1,endHAngle);
+      vAngle1= data.substring(endHAngle+1, endVAngle);
+      speed1= data.substring (endVAngle+1, endSpeed);
+      hAngle= hAngle1.toInt();
+      vAngle= vAngle1.toInt();
+      speed= speed1.toInt();
+      Serial.println(hAngle);
+      horizStep();
+     // delay(2000);
+    //  vertStep();
+      //delay(2000);
+     if (speed==0)
+        break;
+     actuator();
+      //dcMotors();
+    }
+    dataR=0;
+    data="";
+  }}
+}
+
+void horizStep (){
+  double moveAngle= 1;
+  if (hAngle<currentHAngle){
+    moveAngle=currentHAngle-hAngle;
+    digitalWrite(directionH,LOW);
+  }
+  else{
+    moveAngle= hAngle-currentHAngle;
+    digitalWrite(directionH,HIGH);
+  }
+  double moveAngle1= 1;
+  if (vAngle<currentVAngle){
+    moveAngle1=currentVAngle-vAngle;
+    digitalWrite(directionV,LOW);
+  }
+  else{
+    moveAngle1= vAngle-currentVAngle;
+    digitalWrite(directionV,HIGH);
+  }
+    
+  currentVAngle= vAngle;
+  Serial.println("Vertical Angle");
+  Serial.println(moveAngle1);
+  double loops1= moveAngle1*42.48;
+  currentHAngle= hAngle;
+  Serial.println("horizonal angle");
+  Serial.println(moveAngle);
+  double loops= moveAngle*42.48;
+
+  double highAngle;
+  if (moveAngle > moveAngle1)
+    highAngle = moveAngle;
+  else
+    highAngle = moveAngle1;
+
+  double loops3 = highAngle*42.48;
+  
+  for (int i=0; i<loops3;i++){
+    if (i<loops)
+      digitalWrite(stepH,HIGH);
+    if (i<loops1)
+      digitalWrite(stepV,HIGH);
+      
+    delay(1);
+    if (i<loops)
+      digitalWrite(stepH,LOW);
+    if (i<loops1)
+      digitalWrite(stepV,LOW);
+    delay(1);
+  }
+}
+
+void vertStep (){
+  double moveAngle= 1;
+  if (vAngle<currentVAngle){
+    moveAngle=currentVAngle-vAngle;
+    digitalWrite(directionV,LOW);
+  }
+  else{
+    moveAngle= vAngle-currentVAngle;
+    digitalWrite(directionV,HIGH);
+  }
+    
+  currentVAngle= vAngle;
+  Serial.println("Vertical Angle");
+  Serial.println(moveAngle);
+  double loops= moveAngle*42.48;
+  for (int i=0; i<loops; i++){
+    digitalWrite(stepV,HIGH);
+    delay(1);
+    digitalWrite(stepV,LOW);
+    delay(1);
+  }
+  delay (1000);
+}
+
+void actuator (){
+  Serial.println("actuator");
+  digitalWrite(act1Pin, HIGH);
+  digitalWrite(act2Pin, LOW);
+  delay (24000);
+  digitalWrite(act1Pin, LOW);
+  digitalWrite(act2Pin, HIGH);
+  delay (26000);
+}
+
+void dcMotors(){
+  analogWrite(enablePinDC, speed);
+  digitalWrite(dc1Pin, true);
+  digitalWrite(dc2Pin,true);
+  delay (10000);
+  analogWrite(enablePinDC,0);
+  digitalWrite(dc1Pin, false);
+  digitalWrite(dc2Pin,false);
+}
+
